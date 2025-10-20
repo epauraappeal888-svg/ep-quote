@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EP Quote — DTF + Screen</title>
+<style>
+  :root { --bg:#0b0d10; --card:#151922; --muted:#9aa3b2; --text:#e8edf5; --accent:#3ecf8e; --danger:#ff6b6b; --warn:#f6c343; }
+  html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  .wrap{max-width:840px;margin:0 auto;padding:16px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  @media (max-width:680px){.row,.row3{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:14px;padding:14px 14px 10px 14px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+  h1{font-size:20px;margin:6px 0 12px}
+  h2{font-size:15px;opacity:.9;margin:0 0 10px}
+  label{font-size:12px;color:var(--muted);display:block;margin:8px 0 4px}
+  input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #2a3140;background:#0f1218;color:var(--text)}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#0f1218;border:1px solid #2a3140;color:var(--muted);font-size:12px;margin:4px 6px 0 0;cursor:pointer}
+  .pill.active{background:#0f1d14;color:#bff2d8;border-color:#244b37}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .money{font-variant-numeric:tabular-nums}
+  .kpi{display:flex;justify-content:space-between;align-items:center;margin:4px 0;padding:10px;border-radius:12px;background:#0f1218;border:1px solid #2a3140}
+  .kpi .v{font-size:18px}
+  .accent{color:var(--accent)} .warn{color:var(--warn)} .danger{color:var(--danger)}
+  .footer{color:var(--muted);font-size:12px;margin-top:8px}
+  .btn{background:#1a2230;border:1px solid #2a3140;color:#cfe6ff;border-radius:10px;padding:10px 12px;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>EP Quote — DTF & Screen</h1>
+
+  <!-- INPUTS -->
+  <div class="card">
+    <h2>Job</h2>
+    <div class="row">
+      <div>
+        <label>Customer</label>
+        <input id="customer" placeholder="Name / note">
+      </div>
+      <div>
+        <label>Quote ID</label>
+        <input id="qid" placeholder="e.g. 2025-001">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Garment</label>
+        <select id="garment">
+          <option value="Tee">T-Shirt</option>
+          <option value="Hoodie">Hoodie</option>
+          <option value="Polo">Polo</option>
+          <option value="Dri-Fit">Dri-Fit</option>
+          <option value="Bag/Tote">Bag/Tote</option>
+        </select>
+      </div>
+      <div>
+        <label>Quantity</label>
+        <input id="qty" type="number" inputmode="numeric" value="48" min="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Method</label>
+        <select id="method">
+          <option value="DTF">DTF (outsourced)</option>
+          <option value="Screen">Screen Printing</option>
+        </select>
+      </div>
+      <div>
+        <label>% 2XL+ (tees/polos/dri-fit)</label>
+        <input id="pct2xl" type="number" inputmode="decimal" value="15">
+      </div>
+    </div>
+
+    <div class="row3">
+      <div>
+        <label>Front (W×H inches)</label>
+        <div class="grid">
+          <input id="fw" type="number" value="4" inputmode="decimal" step="0.1">
+          <input id="fh" type="number" value="4" inputmode="decimal" step="0.1">
+        </div>
+      </div>
+      <div>
+        <label>Back (W×H inches)</label>
+        <div class="grid">
+          <input id="bw" type="number" value="13" inputmode="decimal" step="0.1">
+          <input id="bh" type="number" value="13" inputmode="decimal" step="0.1">
+        </div>
+      </div>
+      <div>
+        <label>Extra (W×H inches)</label>
+        <div class="grid">
+          <input id="ew" type="number" value="0" inputmode="decimal" step="0.1">
+          <input id="eh" type="number" value="0" inputmode="decimal" step="0.1">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Colors (for Screen)</label>
+        <input id="colors" type="number" value="2" min="1">
+      </div>
+      <div>
+        <label>Quick Sizes</label>
+        <div>
+          <span class="pill" data-preset="chest">Left chest 4×4</span>
+          <span class="pill" data-preset="back">Back 13×13</span>
+          <span class="pill" data-preset="none">No extra</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="card" id="settingsCard">
+    <h2>Settings (tap to tweak; saved on this device)</h2>
+    <div class="row3">
+      <div><label>Profit Margin %</label><input id="margin" type="number" value="40"></div>
+      <div><label>Sales Tax %</label><input id="tax" type="number" value="8.25" step="0.01"></div>
+      <div><label>Layout Efficiency (DTF)</label><input id="eff" type="number" value="0.85" step="0.01"></div>
+    </div>
+    <div class="row3">
+      <div><label>Press Labor per Location ($)</label><input id="press" type="number" value="0.35" step="0.01"></div>
+      <div><label>2XL+ Upcharge ($)</label><input id="up2xl" type="number" value="2" step="0.01"></div>
+      <div><label>Hoodie Handling ($)</label><input id="hoodieH" type="number" value="0.75" step="0.01"></div>
+    </div>
+    <div class="row3">
+      <div><label>Tee ($)</label><input id="tee" type="number" value="4" step="0.01"></div>
+      <div><label>Hoodie S–XL ($)</label><input id="hoodS" type="number" value="10" step="0.01"></div>
+      <div><label>Hoodie 2XL+ ($)</label><input id="hood2" type="number" value="12" step="0.01"></div>
+    </div>
+    <div class="row3">
+      <div><label>Polo ($)</label><input id="polo" type="number" value="12" step="0.01"></div>
+      <div><label>Dri-Fit ($)</label><input id="dri" type="number" value="5" step="0.01"></div>
+      <div><label>Bag/Tote ($)</label><input id="bag" type="number" value="2" step="0.01"></div>
+    </div>
+    <div class="row">
+      <div><label>Screen Setup per Color ($)</label><input id="setup" type="number" value="20" step="0.01"></div>
+      <div>
+        <label>Screen Run Tiers ($/color/loc)</label>
+        <div class="footer">12:1.25, 24:1.05, 48:0.90, 72:0.80, 144:0.70, 300:0.60</div>
+      </div>
+    </div>
+    <div class="footer">DTF gang-sheet costs (YOUR cost) are built-in: 22″ × {24:$12, 36:$16, 48:$20, 60:$24, 72:$28, 84:$32, 96:$36, 108:$40, 120:$46}.</div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="card">
+    <h2>Results</h2>
+    <div class="kpi"><div>Your cost (pre-margin)</div><div id="prem" class="v money"></div></div>
+    <div class="kpi"><div>Sell price (pre-tax)</div><div id="sell" class="v money"></div></div>
+    <div class="kpi"><div>Tax</div><div id="taxv" class="v money"></div></div>
+    <div class="kpi"><div><b>Order total</b></div><div id="total" class="v money accent"></div></div>
+    <div class="kpi"><div>Per-garment sell (with tax)</div><div id="per" class="v money"></div></div>
+    <div class="kpi"><div>Profit</div><div id="profit" class="v money warn"></div></div>
+    <div class="footer" id="breakdown"></div>
+    <div style="margin-top:10px;display:flex;gap:10px">
+      <button class="btn" id="copyBtn">Copy Summary</button>
+      <button class="btn" id="saveBtn">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DTF=[{L:24,P:12},{L:36,P:16},{L:48,P:20},{L:60,P:24},{L:72,P:28},{L:84,P:32},{L:96,P:36},{L:108,P:40},{L:120,P:46}];
+const tiers=[{Q:12,C:1.25},{Q:24,C:1.05},{Q:48,C:0.90},{Q:72,C:0.80},{Q:144,C:0.70},{Q:300,C:0.60}];
+const $=id=>document.getElementById(id);
+const n=v=>isFinite(+v)?+v:0;
+const money=v=>'$'+(Math.round(v*100)/100).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const save=()=>{const ids=['margin','tax','eff','press','up2xl','hoodieH','tee','hoodS','hood2','polo','dri','bag','setup'];const o={};ids.forEach(id=>o[id]=n($(id).value));localStorage.setItem('epq-settings',JSON.stringify(o));alert('Settings saved on this device.');};
+const load=()=>{const s=localStorage.getItem('epq-settings');if(!s)return;const o=JSON.parse(s);Object.entries(o).forEach(([k,v])=>{if($(k))$(k).value=v;});};
+function calc(){
+  const method=$('method').value, garment=$('garment').value, qty=Math.max(1,n($('qty').value)), pct2=Math.max(0,n($('pct2xl').value));
+  const fw=n($('fw').value),fh=n($('fh').value),bw=n($('bw').value),bh=n($('bh').value),ew=n($('ew').value),eh=n($('eh').value),colors=Math.max(1,n($('colors').value));
+  const margin=n($('margin').value),tax=n($('tax').value),eff=n($('eff').value),press=n($('press').value),up2xl=n($('up2xl').value),hoodieH=n($('hoodieH').value);
+  const tee=n($('tee').value),hoodS=n($('hoodS').value),hood2=n($('hood2').value),polo=n($('polo').value),dri=n($('dri').value),bag=n($('bag').value),setup=n($('setup').value);
+  const aF=fw*fh,aB=bw*bh,aE=ew*eh,locs=(aF>0?1:0)+(aB>0?1:0)+(aE>0?1:0),areaPer=aF+aB+aE,totalArea=areaPer*qty;
+  let blankPer=tee;if(garment==='Tee')blankPer=tee+up2xl*(pct2/100);else if(garment==='Polo')blankPer=polo+up2xl*(pct2/100);
+  else if(garment==='Dri-Fit')blankPer=dri+up2xl*(pct2/100);else if(garment==='Bag/Tote')blankPer=bag;
+  else if(garment==='Hoodie')blankPer=hoodS+(hood2-hoodS)*(pct2/100)+hoodieH;
+  const blankCost=blankPer*qty;
+  let printCost=0,pressLabor=0;
+  if(method==='DTF'){const reqLinearIn=eff>0?totalArea/(22*eff):0;let gang=DTF[DTF.length-1];for(const g of DTF){if(reqLinearIn<=g.L){gang=g;break;}}printCost=gang.P;pressLabor=qty*locs*press;}
+  else {let runUnit=tiers[0].C;for(const t of tiers){if(qty>=t.Q)runUnit=t.C;}const setupCost=setup*colors;const runCost=runUnit*qty*colors*locs;printCost=setupCost+runCost;}
+  const preMargin=blankCost+printCost+pressLabor;const sell=(margin>=100)?preMargin:preMargin/(1-margin/100);const taxAmt=sell*(tax/100);const total=sell+taxAmt;const profit=sell-preMargin;const perItem=total/qty;
+  $('prem').textContent=money(preMargin);$('sell').textContent=money(sell);$('taxv').textContent=money(taxAmt);$('total').textContent=money(total);$('per').textContent=money(perItem);$('profit').textContent=money(profit);
+}
+['customer','qid','garment','qty','pct2xl','method','fw','fh','bw','bh','ew','eh','colors','margin','tax','eff','press','up2xl','hoodieH','tee','hoodS','hood2','polo','dri','bag','setup']
+  .forEach(id=>$(id).addEventListener('input',calc));
+document.querySelectorAll('.pill').forEach(el=>{el.addEventListener('click',()=>{
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  if(el.dataset.preset==='chest'){$('fw').value=4;$('fh').value=4;}
+  if(el.dataset.preset==='back'){$('bw').value=13;$('bh').value=13;}
+  if(el.dataset.preset==='none'){$('ew').value=0;$('eh').value=0;}
+  calc();
+});});
+$('saveBtn').addEventListener('click',save);
+$('copyBtn').addEventListener('click',()=>{
+  const txt=`Quote ${$('qid').value||''} — ${$('customer').value||''}
+Garment: ${$('garment').value} · Qty ${$('qty').value} · Method ${$('method').value}
+Your cost: ${$('prem').textContent}
+Sell (pre-tax): ${$('sell').textContent}
+Tax: ${$('taxv').textContent}
+Order total: ${$('total').textContent}
+Per garment: ${$('per').textContent}
+Profit: ${$('profit').textContent}`;
+  navigator.clipboard.writeText(txt).then(()=>alert('Summary copied.'));
+});
+load();calc();
+</script>
+</body>
+</html>
